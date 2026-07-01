@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Mouts.DeveloperTest.Api/Mouts.DeveloperTest.Api.csproj" />
+  <Project Path="Mouts.DeveloperTest.Domain/Mouts.DeveloperTest.Domain.csproj" />
+  <Project Path="Mouts.DeveloperTest.InfraStructure/Mouts.DeveloperTest.InfraStructure.csproj" />
+  <Project Path="Mouts.DeveloperTest.Service/Mouts.DeveloperTest.Service.csproj" />
+  <Project Path="Mouts.DeveloperTest.Shared/Mouts.DeveloperTest.Shared.csproj" />
+</Solution>
