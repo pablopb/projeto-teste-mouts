@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Mouts.DeveloperTest.InfraStructure;
 using Mouts.DeveloperTest.InfraStructure.Authentication;
 using Mouts.DeveloperTest.Service;
+using Mouts.DeveloperTest.Service.EventNotification;
 using Mouts.DeveloperTest.Shared.Configuration;
 using System.Text;
 
@@ -26,6 +27,7 @@ builder.Services.Configure<JwtOptions>(
 builder.Services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IEventPublisher, LoggingEventPublisher>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();

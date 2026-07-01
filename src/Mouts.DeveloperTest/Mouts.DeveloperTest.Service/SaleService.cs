@@ -4,10 +4,11 @@ using Mouts.DeveloperTest.InfraStructure;
 using Mouts.DeveloperTest.Shared.Dtos.Sale;
 using Mouts.DeveloperTest.Shared.Pagination;
 using Mouts.DeveloperTest.Shared.Mappers;
+using Mouts.DeveloperTest.Service.EventNotification;
 
 namespace Mouts.DeveloperTest.Service
 {
-    public sealed class SaleService(ISaleRepository repository) : ISaleService
+    public sealed class SaleService(ISaleRepository repository, IEventPublisher publisher) : ISaleService
     {
         public async Task<SaleResponse> Create(CreateSaleRequest request)
         {
@@ -28,7 +29,9 @@ namespace Mouts.DeveloperTest.Service
 
             await repository.Add(sale);
 
-            LogEvents(sale);
+            await publisher.PublishAsync(sale.Events);
+
+            sale.ClearEvents();
 
             return sale.ToResponse();
         }
@@ -64,19 +67,11 @@ namespace Mouts.DeveloperTest.Service
 
             await repository.Update(sale);
 
-            LogEvents(sale);
-
-            return sale.ToResponse();
-        }
-
-        private static void LogEvents(Sale sale)
-        {
-            foreach (var e in sale.Events)
-            {
-                Console.WriteLine($"DOMAIN EVENT: {e.GetType().Name}");
-            }
+            await publisher.PublishAsync(sale.Events);
 
             sale.ClearEvents();
+
+            return sale.ToResponse();
         }
     }
 }
